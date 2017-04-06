@@ -1,4 +1,5 @@
 -- Criando a tabela de pessoas
+-- Banco de dados postgres
 
 CREATE TABLE public."Pessoas"
 (
@@ -22,13 +23,13 @@ COMMENT ON TABLE public."Pessoas"
 
 -- inserte na tabela de pessoas, para teste 
 
-INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 1, 'Teste 01', 21, 'M');
-INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 2, 'Teste 02', 45, 'F');
-INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 3, 'Teste 03', 15, 'M');
-INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 4, 'Teste 04', 18, 'F');
-INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 5, 'Teste 05', 90, 'M');
-INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 6, 'Teste 06', 62, 'F');
-INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 7, 'Teste 07', 07, 'M');
+INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 1, 'Diego Francisco', 26, 'M');
+INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 2, 'Ester de Souza', 45, 'F');
+INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 3, 'Thiago Costa', 15, 'M');
+INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 4, 'João Espindola', 18, 'F');
+INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 5, 'Jeremias doidão', 90, 'M');
+INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 6, 'Zumira da Silva', 62, 'F');
+INSERT INTO public."Pessoas" ( id, nome, idade, sexo ) VALUES ( 7, 'Miguel Viana', 07, 'M');
 
 -- Criando a função que fara o select na tabela de pessoas filtrado pelo sexo da pessoa
 
@@ -45,6 +46,21 @@ BEGIN
         
         WHERE pessoa.sexo = genero;
 	
+	RETURN;
+END;
+$$ LANGUAGE 'plpgsql'
+
+CREATE OR REPLACE FUNCTION buscarTodasPessoas() RETURNS SETOF public."Pessoas" AS $$
+BEGIN
+	RETURN QUERY 
+
+        SELECT pessoa.id,
+               pessoa.nome,
+               pessoa.idade,
+               pessoa.sexo
+        
+        FROM public."Pessoas" AS pessoa;
+        	
 	RETURN;
 END;
 $$ LANGUAGE 'plpgsql'
